@@ -10,13 +10,10 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 import torchvision.models as models
 import argparse
-
 import futils
 
 ap = argparse.ArgumentParser(description='Train.py')
 
-
-# Ardguments
 ap.add_argument('data_dir', nargs='*', action="store", default="./flowers/")
 ap.add_argument('--gpu', dest="gpu", action="store", default="gpu")
 ap.add_argument('--save_dir', dest="save_dir", action="store", default="./checkpoint.pth")
@@ -36,17 +33,11 @@ hidden_layer1 = pa.hidden_units
 power = pa.gpu
 epochs = pa.epochs
 
-
-trainloader, v_loader, testloader = futils.load_data(where)
-
-
-model, optimizer, criterion = futils.nn_setup(structure,dropout,hidden_layer1,lr,power)
-
-
-futils.train_network(model, optimizer, criterion, epochs, 20, trainloader, power)
-
-
-futils.save_checkpoint(path,structure,hidden_layer1,dropout,lr)
-
-
-print("Finished. Model Training Completed")
+def main():
+    
+    trainloader, v_loader, testloader = iutils.load_data(root)
+    model, optimizer, criterion = futils.network_construct(structure,dropout,hidden_layer1,lr,device)
+    futils.do_deep_learning(model, optimizer, criterion, epochs, 40, trainloader, device)
+    futils.save_checkpoint(model,path,structure,hidden_layer1,dropout,lr)
+    
+print("Finished. Model Training Complete")
